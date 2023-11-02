@@ -65,6 +65,8 @@ async function getInfo(planetName) {
                 const infoContainer = document.createElement('div');
                 infoContainer.className = 'info-container';
 
+
+
                 // Create and append the pseudo-element
                 const pseudoElement = document.createElement('div');
                 pseudoElement.className = 'info-container-pseudo';
@@ -82,8 +84,11 @@ async function getInfo(planetName) {
                 const contentContainer = document.createElement('div');
                 contentContainer.style.position = 'absolute';
                 contentContainer.style.width = '50%';
+                contentContainer.style.height="100%"
                 contentContainer.style.right = '10%';
-                contentContainer.style.bottom = '30%';
+                contentContainer.style.display = 'flex';
+                contentContainer.style.flexDirection = "column"
+                contentContainer.style.justifyContent = "center"
 
                 contentContainer.innerHTML = `
     <h3 class="planet-info ${planetName.toLowerCase().replace(' ', '-')}">${planetName}</h3>
