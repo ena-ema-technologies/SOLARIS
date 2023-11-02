@@ -1,129 +1,118 @@
 const planetColors = {
-    "Merkurius": "linear-gradient(90deg, rgba(140, 139, 135, 1) 12%, rgba(122, 121, 118, 1) 53%, rgba(63, 30, 30, 1) 100%)",
-
-    "Venus": "linear-gradient(90deg, rgba(231, 204, 203, 1) 12%, rgba(231, 198, 196, 1) 53%, rgba(63, 30, 30, 1) 100%)",
-    
-    "Mars": "linear-gradient(90deg, rgba(239, 93, 93, 1) 12%, rgba(235, 77, 77, 1) 53%, rgba(63, 30, 30, 1) 100%)",
-
-    "Jupiter": "linear-gradient(90deg, rgba(226, 150, 105, 1) 12%, rgba(219, 136, 87, 1) 53%, rgba(63, 30, 30, 1) 100%)",
-
-    "Saturnus": "linear-gradient(90deg, rgba(198, 170, 113, 1) 12%, rgba(197, 161, 88, 1) 53%, rgba(63, 30, 30, 1) 100%)",
-
-    "Uranus": "linear-gradient(90deg, rgba(202, 213, 241, 1) 12%, rgba(183, 197, 235, 1) 53%, rgba(63, 30, 30, 1) 100%)",
-
-    "Neptunus": "linear-gradient(90deg, rgba(122, 145, 166, 1) 12%, rgba(80, 128, 172, 1) 53%, rgba(63, 30, 30, 1) 100%)",
-
-    "Jorden": "linear-gradient(90deg, rgba(69, 144, 214, 1) 12%, rgba(35, 133, 224, 1) 53%, rgba(63, 30, 30, 1) 100%)",
-
-    "Solen": "linear-gradient(90deg, rgba(247, 212, 89, 1) 12%, rgba(255, 209, 41, 1) 53%, rgba(63, 30, 30, 1) 100%)",
+    "Merkurius": "rgba(140, 139, 135, 1)",
+    "Venus": "rgba(231, 204, 203, 1)",
+    "Mars": "rgba(239, 93, 93, 1)",
+    "Jupiter": "rgba(226, 150, 105, 1)",
+    "Saturnus": "rgba(198, 170, 113, 1)",
+    "Uranus": "rgba(202, 213, 241, 1)",
+    "Neptunus": "rgba(122, 145, 166, 1)",
+    "Jorden": "rgb(69, 144, 214)",
+    "Solen": "rgb(255, 209, 41)",
 };
 
-const defaultBackgroundColor = "linear-gradient(90deg, rgba(33, 23, 99, 1) 12%, rgba(9, 9, 121, 1) 53%, rgba(63, 30, 30, 1) 100%)";
+const defaultBackgroundColor = "#428ed4";
 
-async function getNames(method = "GET") { //get the list of names
+// Function to get the list of planet names
+async function getNames(method = "GET") {
     try {
-        
         const url = 'https://majazocom.github.io/Data/solaris.json';
-        const options = {
-            method,
-        };
-            
-            const response = await fetch(url, options);
-            const data = await response.json();
-            const containerOne = document.getElementById("container-one");
+        const options = { method };
+        const response = await fetch(url, options);
+        const data = await response.json();
+        const containerOne = document.getElementById("container-one");
 
-            data.forEach(solaris => { //each object of json
-                const listElement = document.createElement('div');
-                listElement.classList.add('child-container');
-                listElement.addEventListener('click', function() { //add click event to show the information
-                    getInfo(listElement.textContent)
-                    setBodyColor(solaris.name);
-                    
-                  });
-                listElement.textContent = solaris.name;
-                console.log(solaris.name);
-                containerOne.appendChild(listElement);
-
+        data.forEach(planet => {
+            const listElement = document.createElement('div');
+            listElement.classList.add('child-container');
+            listElement.addEventListener('click', function() {
+                const planetName = planet.name;
+                setBodyColor(planetName);
+                getInfo(planetName);
             });
-               //add button to back home
-               const BtnElement = document.createElement('button');
-               BtnElement.className = 'zocom-button';
-               BtnElement.addEventListener('click', function() {
-                   window.location.reload();
-               });
-               BtnElement.textContent = "ZoCom";
-               document.body.appendChild(BtnElement);
-        } catch (error) {
-            console.error('Something went wrong: ', error);
-        }
-    }
+            listElement.textContent = planet.name;
+            containerOne.appendChild(listElement);
+        });
 
-    const setBodyColor=(planetName)=> {
-        // Get the color for the planet from the mapping
-        const color = planetColors[planetName];
-    if (color) {
-        document.body.style.background = color;
-    } else {
-        // If the planet is not in the mapping, set a default background
-        document.body.style.background = defaultBackgroundColor;
+        // Add a button to go back home
+        const BtnElement = document.createElement('button');
+        BtnElement.className = 'zocom-button';
+        BtnElement.addEventListener('click', function() {
+            window.location.reload();
+        });
+        BtnElement.textContent = "ZoCom";
+        document.body.appendChild(BtnElement);
+    } catch (error) {
+        console.error('Something went wrong: ', error);
     }
-    }
-    
-    async function getInfo(pname) { //get the detail information when you click the certain planet
-        try {
-            const url = 'https://majazocom.github.io/Data/solaris.json';
-            const options = {
-                method: "GET"
-            };
-                
-            const response = await fetch(url, options);
-                const data = await response.json();
-                data.forEach(solaris => {
-                    if(solaris.name === pname) //choose only you want among all data
-                    {
-                        console.log(solaris);
-                        // document.body.className = planetColorClass;
-                        //show the infomation from json data
-                        let info = '<div class="info-contianer">';
-                        info += '<div class="lines">'
-                        info += '<h3 class="planet-info ' + solaris.name.toLowerCase().replace(' ', '-') + '">' + '</h3>';
-                        info += '<h3> '+solaris.name+'</h3>';
-                        info += '<h4> '+solaris.latinName+'</h4>';
-                        info += '<p>'+solaris.desc+'<p>';
-                        info += '<h5> Omkrets <br> <span class="circumference">' + solaris.circumference + ' </span> <br> Km från solen <br> <span class="distance"> ' + solaris.distance + '</span> </h5>';
-                        /*info += '<h5> Omkrets <br>'+solaris.circumference+'</h5>'                        
-                        info += '<h5> Km från Solen <br> '+solaris.distance+ ' km' + '</h5>'*/
-                        info += '<h5> Max Temperature <br> <span class="night">' + solaris.temp.night + '</span> °C <br>' + ' Min Temperature <br> <span class="day">' + solaris.temp.day + ' </span> °C</h5>'; // Display Min-Max temperature
+}
 
-                        /*info += '<h5> Rotation <br> '+solaris.rotation+'</h5>'
-                        info += '<h5> orbitalPeriod <br> '+solaris.orbitalPeriod+'</h5>' */
-                        let moon_info = ''
-                        for(var i=0; i< solaris.moons.length; i++)
-                        {
-                            moon_info += solaris.moons[i]
-                            if(i+1 < solaris.moons.length) // if it is last element, you don't need comma
-                                moon_info += ' - ';                            
-                        }   
-                        info += '<h6> Månar <br>' + moon_info +'<h6>'
-                        info += '</div>'; 
-                        info += '</div>'; 
-                        document.body.innerHTML = info;
+// Function to set the background color of the body based on the selected planet
+function setBodyColor(planetName) {
+    const color = planetColors[planetName] || defaultBackgroundColor;
+    document.body.style.backgroundColor = color;
+}
 
-                        
-                        //add button to back home
-                        const BtnElement = document.createElement('button');
-                        BtnElement.className = 'zocom-button';
-                        BtnElement.addEventListener('click', function() {
-                            window.location.reload();
-                        });
-                        BtnElement.textContent = "ZoCom";
-                        document.body.appendChild(BtnElement);
-                    }
+// Function to get planet information
+async function getInfo(planetName) {
+    try {
+        const url = 'https://majazocom.github.io/Data/solaris.json';
+        const options = { method: "GET" };
+        const response = await fetch(url, options);
+        const data = await response.json();
+        data.forEach(planet => {
+            if (planet.name === planetName) {
+                // Create the info container
+                const infoContainer = document.createElement('div');
+                infoContainer.className = 'info-container';
+
+                // Create and append the pseudo-element
+                const pseudoElement = document.createElement('div');
+                pseudoElement.className = 'info-container-pseudo';
+                pseudoElement.style.position = 'fixed';
+                pseudoElement.style.width = '40%';
+                pseudoElement.style.content = '""';
+                pseudoElement.style.height = '100%';
+                pseudoElement.style.left = '-30%';
+                pseudoElement.style.top = '0';
+                pseudoElement.style.borderRadius = '50%';
+                pseudoElement.style.background = planetColors[planetName] || defaultBackgroundColor;
+                pseudoElement.style.boxShadow = '0px 0px 250px 0px rgba(255, 208, 41, 0.20)';
+               
+
+                const contentContainer = document.createElement('div');
+                contentContainer.style.position = 'absolute';
+                contentContainer.style.width = '50%';
+                contentContainer.style.right = '10%';
+                contentContainer.style.bottom = '30%';
+
+                contentContainer.innerHTML = `
+    <h3 class="planet-info ${planetName.toLowerCase().replace(' ', '-')}">${planetName}</h3>
+    <h4>${planet.latinName}</h4>
+    <p>${planet.desc}</p>
+    <h5>Omkrets <br><span class="circumference">${planet.circumference}</span> <br>Km från solen <br><span class="distance">${planet.distance}</span></h5>
+    <h5>Max Temperature <br><span class="night">${planet.temp.night}</span> °C <br>Min Temperature <br><span class="day">${planet.temp.day}</span> °C</h5>
+    <h6>Månar <br>${planet.moons.join(' - ')}</h6>
+</div>`;
+
+                document.body.innerHTML = ''; // Clear the body
+                infoContainer.appendChild(pseudoElement);
+                infoContainer.appendChild(contentContainer)
+                document.body.appendChild(infoContainer);
+
+                // Add a button to go back home
+                const BtnElement = document.createElement('button');
+                BtnElement.className = 'zocom-button';
+                BtnElement.addEventListener('click', function() {
+                    window.location.reload();
                 });
-            } catch (error) {
-                console.error('Something went wrong: ', error);
+                BtnElement.textContent = "ZoCom";
+                infoContainer.appendChild(BtnElement);
             }
-        }
-    // To make a GET request:
+        });
+    } catch (error) {
+        console.error('Something went wrong: ', error);
+    }
+}
 
-getNames("GET")
+// To make a GET request and start the application
+getNames("GET");
