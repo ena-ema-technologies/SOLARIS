@@ -1,13 +1,19 @@
 const planetColors = {
-    "Merkurius": "red",
-    "Venus": "orange",
-    "Earth": "blue",
-    "Mars": "red",
-    "Jupiter": "green",
-    "Saturn": "yellow",
-    "Uranus": "cyan",
-    "Neptune": "darkblue",
-    // Add more planets and colors as needed
+    "Merkurius": "linear-gradient(90deg, rgba(140, 139, 135, 1) 12%, rgba(122, 121, 118, 1) 53%, rgba(63, 30, 30, 1) 100%)",
+
+    "Venus": "linear-gradient(90deg, rgba(231, 204, 203, 1) 12%, rgba(231, 198, 196, 1) 53%, rgba(63, 30, 30, 1) 100%)",
+    
+    "Mars": "linear-gradient(90deg, rgba(239, 93, 93, 1) 12%, rgba(235, 77, 77, 1) 53%, rgba(63, 30, 30, 1) 100%)",
+
+    "Jupiter": "linear-gradient(90deg, rgba(226, 150, 105, 1) 12%, rgba(219, 136, 87, 1) 53%, rgba(63, 30, 30, 1) 100%)",
+
+    "Saturnus": "linear-gradient(90deg, rgba(198, 170, 113, 1) 12%, rgba(197, 161, 88, 1) 53%, rgba(63, 30, 30, 1) 100%)",
+
+    "Uranus": "linear-gradient(90deg, rgba(202, 213, 241, 1) 12%, rgba(183, 197, 235, 1) 53%, rgba(63, 30, 30, 1) 100%)",
+
+    "Neptunus": "linear-gradient(90deg, rgba(122, 145, 166, 1) 12%, rgba(80, 128, 172, 1) 53%, rgba(63, 30, 30, 1) 100%)",
+    
+    "Jorden": "linear-gradient(90deg, rgba(69, 144, 214, 1) 12%, rgba(35, 133, 224, 1) 53%, rgba(63, 30, 30, 1) 100%)"
 };
 
 const defaultBackgroundColor = "linear-gradient(90deg, rgba(33, 23, 99, 1) 12%, rgba(9, 9, 121, 1) 53%, rgba(63, 30, 30, 1) 100%)";
@@ -50,7 +56,7 @@ async function getNames(method = "GET") { //get the list of names
         }
     }
 
-    function setBodyColor(planetName) {
+    const setBodyColor=(planetName)=> {
         // Get the color for the planet from the mapping
         const color = planetColors[planetName];
     if (color) {
