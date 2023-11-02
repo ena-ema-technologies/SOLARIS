@@ -12,8 +12,10 @@ const planetColors = {
     "Uranus": "linear-gradient(90deg, rgba(202, 213, 241, 1) 12%, rgba(183, 197, 235, 1) 53%, rgba(63, 30, 30, 1) 100%)",
 
     "Neptunus": "linear-gradient(90deg, rgba(122, 145, 166, 1) 12%, rgba(80, 128, 172, 1) 53%, rgba(63, 30, 30, 1) 100%)",
-    
-    "Jorden": "linear-gradient(90deg, rgba(69, 144, 214, 1) 12%, rgba(35, 133, 224, 1) 53%, rgba(63, 30, 30, 1) 100%)"
+
+    "Jorden": "linear-gradient(90deg, rgba(69, 144, 214, 1) 12%, rgba(35, 133, 224, 1) 53%, rgba(63, 30, 30, 1) 100%)",
+
+    "Solen": "linear-gradient(90deg, rgba(247, 212, 89, 1) 12%, rgba(255, 209, 41, 1) 53%, rgba(63, 30, 30, 1) 100%)",
 };
 
 const defaultBackgroundColor = "linear-gradient(90deg, rgba(33, 23, 99, 1) 12%, rgba(9, 9, 121, 1) 53%, rgba(63, 30, 30, 1) 100%)";
